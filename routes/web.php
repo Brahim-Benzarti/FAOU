@@ -14,7 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome',["email"=>env('MAIN_CONTACT'), "name"=>env('MAIN_CONTACT_IDENTIFIER')]);
+});
+
+Route::middleware('auth')->group(function (){
+    Route::get("Interviews", [App\Http\Controllers\interviews::class, "index"])->name("InterviewsHome");
+    Route::get("Add_Applications", [App\Http\Controllers\interviews::class, "add"])->name("AddApplications");
+    Route::post("Add_Applications", [App\Http\Controllers\interviews::class, "add"])->name("AddApplications");
+    Route::get("View_Applications", [App\Http\Controllers\interviews::class, "view"])->name("ViewApplications");
 });
 
 Auth::routes();
