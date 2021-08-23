@@ -12,6 +12,8 @@ use Illuminate\Validation\Rule;
 use App\Models\Application;
 use Illuminate\Support\Facades\Http; 
 use Auth;
+use App\Mail\InterviewMail;
+use Illuminate\Support\Facades\Mail;
 
 class interviews extends Controller
 {
@@ -171,5 +173,52 @@ class interviews extends Controller
 
     public function download(){
         return Excel::download(new ApplicationsExport, "Applications.xlsx");
+        
+    }
+
+    public function people(Request $request){
+        $this->validate($request,[
+            "number"=>["required","numeric"]
+        ]);
+        $applications=Application::all()->where('User_id',Auth::user()->id)->sortByDesc("stars")->take($request->number);
+        return view("peoplelist",[
+            "applications"=>$applications
+        ]);
+    }
+
+
+
+    public function mail($id=0){
+        if($id){
+            $applicant=Application::find($id);
+            if($applicant){
+                return new InterviewMail($applicant->First_Name." ".$applicant->Last_Name,"https://calendly.com/brahim-benzarti/faou");
+            }
+        }
+        return new InterviewMail("Applicant Name","https://calendly.com/brahim-benzarti/faou");
+    }
+
+
+    public function interview(Request $request){
+        if($request->method()=="GET"){
+            return new InterviewMail("Barhoum","https://www.google.com");
+        }else if($request->method()=="POST"){
+            $this->validate($request,[
+                "link"=>["required","string"],
+                "number"=>["required","numeric"]
+            ]);
+            if($request->me){
+                Mail::to("brahim.al.benzarti@gmail.com")->send(new InterviewMail("Brahim Benzarti",$request->link));
+            }
+            $applications=Application::all()->where('User_id',Auth::user()->id)->sortByDesc("stars")->take($request->number);
+            foreach($applications as $application){
+                // Mail::to($application->Email)->send(new InterviewMail($application->First_Name." ".$application->Last_Name,$request->link));
+            }
+        }
+    }
+
+
+    public function reject(){
+
     }
 }

@@ -29,6 +29,14 @@ Route::middleware('auth')->group(function (){
         Route::post('/seen/{page?}', [App\Http\Controllers\interviews::class, "seen"])->name("viewseen");
     });
     Route::get('/Download_Result' ,[App\Http\Controllers\interviews::class, "download"])->name("backupdownload");
+    Route::prefix('email')->group(function(){
+        Route::get('/interview/{id?}', [App\Http\Controllers\interviews::class, "interview"])->name("interviewemail");
+        Route::post('/interview', [App\Http\Controllers\interviews::class, "interview"]);
+        Route::get('/rejection/{id?}', [App\Http\Controllers\interviews::class, "reject"])->name("rejectemail");
+    });
+    Route::post('peoplelist', [App\Http\Controllers\interviews::class, "people"])->name("people");
+    Route::post('mail/{id?}', [App\Http\Controllers\interviews::class, "mail"]);
+    Route::get('mail/{id?}', [App\Http\Controllers\interviews::class, "mail"]);
 });
 
 Auth::routes();

@@ -92,5 +92,5 @@
 
 </div>
 <script src="{{asset('js/jquery.js')}}"></script>
-<script src="{{asset('js/interviews.js')}}"></script>
+<script src="{{asset('js/viewapps.js')}}"></script>
 @endsection

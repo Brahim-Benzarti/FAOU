@@ -1,0 +1,48 @@
+pendingShow=(page)=>{
+    $.post(
+        "/ViewApplication/pending/"+page,
+        {
+            "_token":$("meta[name='csrf-token']").attr("content"),
+        },
+        (data,stat)=>{
+            $('#preview').html(data);
+        }
+    )
+}
+pendingShow(1);
+seenShow=(page)=>{
+    $.post(
+        "/ViewApplication/seen/"+page,
+        {
+            "_token":$("meta[name='csrf-token']").attr("content"),
+            "rejected":$("#Rejected").prop("checked"),
+            "accepted":$("#Accepted").prop("checked"),
+            "flagged":$("#Flagged").prop("checked"),
+            "incomplete":$("#Incomplete").prop("checked")
+        },
+        (data,stat)=>{
+            $('#preview').html(data);
+        }
+    )
+}
+seencheckboxs=["Rejected","Accepted","Flagged","Incomplete"];
+seencheckboxs.forEach(element => {
+    $("#"+element).change(()=>{
+        seenShow(1);
+    })
+});
+$(()=>{
+    $('#seen0').click(()=>{
+        if($('#seen0').val()==0){
+            $('#slider').slideUp();
+            pendingShow(1);
+        }
+    });
+
+    $('#seen1').click(()=>{
+        if($('#seen1').val()==1){
+            $('#slider').slideDown();
+            seenShow(1);
+        }
+    });
+})
