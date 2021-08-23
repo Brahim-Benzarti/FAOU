@@ -43,7 +43,7 @@ class interviews extends Controller
     public function view(Request $request, $page = 1){
         $applications= Application::all();
         if(count($applications)){
-            return view('viewapplications2',[
+            return view('viewapplications',[
                 "accepted"=>$applications->where("accepted",1)->count(),
                 "rejected"=>$applications->where("rejected",1)->count(),
                 "incomplete"=>$applications->where("incomplete",1)->count(),
