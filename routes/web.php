@@ -21,12 +21,10 @@ Route::middleware('auth')->group(function (){
     Route::get("Interviews", [App\Http\Controllers\interviews::class, "index"])->name("InterviewsHome");
     Route::get("Add_Applications", [App\Http\Controllers\interviews::class, "add"])->name("AddApplications");
     Route::post("Add_Applications", [App\Http\Controllers\interviews::class, "add"])->name("AddApplications");
-    Route::get("View_Applications/{index?}", [App\Http\Controllers\interviews::class, "view"])->name("ViewApplications");
-    Route::post("View_Applications", [App\Http\Controllers\interviews::class, "view"])->name("ViewApplications");
     Route::get("View_Application/{index?}", [App\Http\Controllers\interviews::class, "viewone"])->name("ViewApplication");
     Route::post("View_Application/{index?}", [App\Http\Controllers\interviews::class, "viewone"]);
     Route::prefix("ViewApplication")->group(function (){
-        Route::get('/', [App\Http\Controllers\interviews::class, "view2"])->name("viewdefault");
+        Route::get('/', [App\Http\Controllers\interviews::class, "view"])->name("viewdefault");
         Route::post('/pending/{page?}', [App\Http\Controllers\interviews::class, "pending"])->name("viewpending");
         Route::post('/seen/{page?}', [App\Http\Controllers\interviews::class, "seen"])->name("viewseen");
     });
