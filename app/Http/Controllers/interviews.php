@@ -210,6 +210,8 @@ class interviews extends Controller
                 "current_page"=>$page,
                 "doing"=>"pending"
             ]);
+        }else{
+            return redirect()->route('viewdefault');
         }
     }
 
@@ -224,29 +226,29 @@ class interviews extends Controller
         if(!$applications->count()){
             return "<div class='display-2' style='margin:auto;width:fit-content;'>Nothing Here!</div>";
         }
+        if($request->boolean("rejected")){
+            $applications=$applications->where("rejected",1);
+        }
+        if($request->boolean("flagged")){
+            $applications=$applications->where("flag",1);
+        }
+        if($request->boolean("accepted")){
+            $applications=$applications->where("accepted",1);
+        }
+        if($request->boolean("incomplete")){
+            $applications=$applications->where("incomplete",1);
+        }
         $pages=ceil(count($applications)/10);
         if($page<=$pages){
-            if($request->boolean("rejected")){
-                $applications=$applications->where("rejected",1);
-            }
-            if($request->boolean("flagged")){
-                $applications=$applications->where("flag",1);
-            }
-            if($request->boolean("accepted")){
-                $applications=$applications->where("accepted",1);
-            }
-            if($request->boolean("incomplete")){
-                $applications=$applications->where("incomplete",1);
-            }
-            
             return view("applicationlist",[
                 "applications"=>$applications->skip(($page-1)*10)->take(10),
                 "pages"=>$pages,
                 "current_page"=>$page,
                 "doing"=>"seen"
             ]);
+        }else{
+            return redirect()->route('viewdefault');
         }
-
     }
 
     public function viewone(Request $request,$index){

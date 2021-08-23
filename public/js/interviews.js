@@ -11,7 +11,6 @@ pendingShow=(page)=>{
 }
 pendingShow(1);
 seenShow=(page)=>{
-    console.log("doin the post");
     $.post(
         "/ViewApplication/seen/"+page,
         {
@@ -22,7 +21,6 @@ seenShow=(page)=>{
             "incomplete":$("#Incomplete").prop("checked")
         },
         (data,stat)=>{
-            console.log(data);
             $('#preview').html(data);
         }
     )
