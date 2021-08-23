@@ -17,14 +17,20 @@ class InterviewMail extends Mailable
      * @return void
      */
 
-    public $name;
-    public $link;
+    public $Applicant_Name;
+    public $Meeting_Link;
+    public $User_Name;
+    public $User_Position;
+    public $User_Phone;
 
     
-    public function __construct($name,$link)
+    public function __construct($Applicant_Name,$Meeting_Link,$User_Name,$User_Phone,$User_Position)
     {
-        $this->name=$name;
-        $this->link=$link;
+        $this->Applicant_Name=$Applicant_Name;
+        $this->Meeting_Link=$Meeting_Link;
+        $this->User_Name=$User_Name;
+        $this->User_Position=$User_Position;
+        $this->User_Phone=$User_Phone;
     }
 
     /**
@@ -34,6 +40,6 @@ class InterviewMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.interview');
+        return $this->markdown('emails.interview')->attach("/icons/icon.png");
     }
 }
