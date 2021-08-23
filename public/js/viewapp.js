@@ -1,13 +1,6 @@
-var formfields=["status","decision","flag"];
-var events=["Read","Interview","Flag","Incomplete","Reject"];
+var events=["Interview","Flag","Incomplete","Reject","star1","star2","star3","star4","star5"];
+var stars=["star1","star2","star3","star4","star5"];
 $(()=>{
-    formfields.forEach(e => {
-        $("#"+e).change(()=>{
-            console.log("submit");
-            $("#myform").submit()
-        });
-    });
-    
     var id=$("#id").attr('content');
     events.forEach(event => {
         $('#'+event).click(()=>{
@@ -25,6 +18,16 @@ $(()=>{
             ).fail((resp)=>{
                 $('#'+event).children().first().addClass("spinner-border spinner-border-sm");
             })
+        })
+    });
+    stars.forEach(star => {
+        $("#"+star).on("mouseover click",()=>{
+            $("#"+star).prevAll().css("opacity",'1');
+            $("#"+star).css("opacity",'1');
+        })
+        $("#"+star).mouseleave(()=>{
+            $("#"+star).prevAll().css("opacity",'0.3');
+            $("#"+star).css("opacity",'0.3');
         })
     });
 })

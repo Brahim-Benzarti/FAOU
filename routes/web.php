@@ -25,6 +25,11 @@ Route::middleware('auth')->group(function (){
     Route::post("View_Applications", [App\Http\Controllers\interviews::class, "view"])->name("ViewApplications");
     Route::get("View_Application/{index?}", [App\Http\Controllers\interviews::class, "viewone"])->name("ViewApplication");
     Route::post("View_Application/{index?}", [App\Http\Controllers\interviews::class, "viewone"]);
+    Route::prefix("ViewApplication")->group(function (){
+        Route::get('/', [App\Http\Controllers\interviews::class, "view2"])->name("viewdefault");
+        Route::post('/pending/{page?}', [App\Http\Controllers\interviews::class, "pending"])->name("viewpending");
+        Route::post('/seen/{page?}', [App\Http\Controllers\interviews::class, "seen"])->name("viewseen");
+    });
 
 });
 

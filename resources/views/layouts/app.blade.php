@@ -49,7 +49,7 @@
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Interviews</a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="{{route('InterviewsHome')}}">Interviews</a>
-                                <a class="dropdown-item" href="{{route('ViewApplications')}}">Applications</a>
+                                <a class="dropdown-item" href="{{route('viewdefault')}}">Applications</a>
                                 <a class="dropdown-item" href="{{route('AddApplications')}}">Add Applications</a>
                             </div>
                         </li>

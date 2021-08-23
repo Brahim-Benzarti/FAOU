@@ -20,6 +20,13 @@ class Application extends Model
         'CV',
         'Biography',
         'Motivation_Letter',
-        'User_id'
+        'User_id',
+        'Users_Access',
+        'seen',
+        'flag',
+        'incomplete',
+        'accepted',
+        'rejected',
+        'stars'
     ];
 }

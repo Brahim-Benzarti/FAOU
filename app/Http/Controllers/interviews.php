@@ -37,6 +37,8 @@ class interviews extends Controller
             return redirect()->route("AddApplications",["success"=>1]);
         }
     }
+
+
     public function view(Request $request,$index = 1){
         $table= Application::all();
         if(count($table)==0){
@@ -98,12 +100,12 @@ class interviews extends Controller
                             "pending"=>$table->where("status","pending")->count(),
                             "applications"=>$table->where("decision","accepted")->skip(($index-1)*10)->take(10)
                         ]);
-                    }else if($request->decision=="1"){
+                    }else if($request->decision=="0"){
                         return view('viewapplications',[
                             "current_page"=>$index,
                             "pages"=>ceil($table->where("decision","rejected")->count()/10),
                             "status"=>"0",
-                            "decision"=>"1",
+                            "decision"=>"0",
                             "accepted"=>$table->where("decision","accepted")->count(),
                             "pending"=>$table->where("status","pending")->count(),
                             "applications"=>$table->where("decision","rejected")->skip(($index-1)*10)->take(10)
@@ -180,11 +182,82 @@ class interviews extends Controller
         }
     }
 
+    public function view2(Request $request, $page = 1){
+        $applications= Application::all();
+        if(count($applications)){
+            return view('viewapplications2',[
+                "accepted"=>$applications->where("accepted",1)->count(),
+                "rejected"=>$applications->where("rejected",1)->count(),
+                "incomplete"=>$applications->where("incomplete",1)->count(),
+                "flag"=>$applications->where("flag",1)->count(),
+                "seen"=>$applications->where("seen",0)->count()
+            ]);
+        }else{
+            return redirect()->route("AddApplications");
+        }
+    }
+
+    public function pending(Request $request, $page){
+        $applications= Application::all()->where("seen",0);
+        if(!$applications->count()){
+            return "<div class='display-2' style='margin:auto;width:fit-content;'>You're Done</div>";
+        }
+        $pages=ceil($applications->count()/10);
+        if($page<=$pages){
+            return view("applicationlist",[
+                "applications"=>$applications->skip(($page-1)*10)->take(10),
+                "pages"=>$pages,
+                "current_page"=>$page,
+                "doing"=>"pending"
+            ]);
+        }
+    }
+
+    public function seen(Request $request, $page){
+        $this->validate($request,[
+            "rejected"=>["required"],
+            "accepted"=>["required"],
+            "flagged"=>["required"],
+            "incomplete"=>["required"]
+        ]);
+        $applications= Application::all()->where("seen",1);
+        if(!$applications->count()){
+            return "<div class='display-2' style='margin:auto;width:fit-content;'>Nothing Here!</div>";
+        }
+        $pages=ceil(count($applications)/10);
+        if($page<=$pages){
+            if($request->boolean("rejected")){
+                $applications=$applications->where("rejected",1);
+            }
+            if($request->boolean("flagged")){
+                $applications=$applications->where("flag",1);
+            }
+            if($request->boolean("accepted")){
+                $applications=$applications->where("accepted",1);
+            }
+            if($request->boolean("incomplete")){
+                $applications=$applications->where("incomplete",1);
+            }
+            
+            return view("applicationlist",[
+                "applications"=>$applications->skip(($page-1)*10)->take(10),
+                "pages"=>$pages,
+                "current_page"=>$page,
+                "doing"=>"seen"
+            ]);
+        }
+
+    }
+
     public function viewone(Request $request,$index){
         if($request->method()=="GET"){
             if($index){
                 $application=Application::find($index);
                 if($application){
+                    if($application->seen=='0'){
+                        $application->seen='1';
+                        $application->save();
+                    }
                     $countrycodes=Http::get('https://flagcdn.com/en/codes.json')->json();
                     // dd(array_search(ucfirst(strtolower(trim($application->Nation))),$countrycodes));  
                     foreach($countrycodes as $code=>$country){
@@ -195,28 +268,37 @@ class interviews extends Controller
                                 "application"=>$application
                             ]);
                         }
-                    }
+                    };
+                    return view("viewapplication", [
+                        "country"=>"Earth",
+                        "countrycode"=>0,
+                        "application"=>$application
+                    ]);
                 }else{
-                    return redirect()->route("ViewApplications");
+                    return redirect()->route("viewdefault");
                 }
             }else{
-                return redirect()->route("ViewApplications");
+                return redirect()->route("viewdefault");
             }
         }else if($request->method()=="POST"){
             $this->validate($request, [
-                "event"=>["required",Rule::in(["Read","Interview","Flag","Incomplete","Reject"])]
+                "event"=>["required",Rule::in(["Interview","Flag","Incomplete","Reject","star1","star2","star3","star4","star5"])]
             ]);
             $application=Application::find($index);
-            if($request->event=="Read"){
-                $application->status="read";
-            }else if($request->event=="Interview"){
-                $application->decision="accepted";
-            }else if($request->event=="Flag"){
-                $application->flag=1;
-            }else if($request->event=="Incomplete"){
-                $application->incomplete=1;
-            }else if($request->event=="Reject"){
-                $application->decision="rejected";
+            if($request->event=="Interview"){
+                $application->accepted="1";
+            }
+            if($request->event=="Flag"){
+                $application->flag="1";
+            }
+            if($request->event=="Incomplete"){
+                $application->incomplete="1";
+            }
+            if($request->event=="Reject"){
+                $application->rejected="1";
+            }
+            if(strstr($request->event,"star")){
+                $application->stars=substr($request->event,4,1);
             }
             $application->save();
             return "ok";
