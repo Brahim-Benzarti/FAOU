@@ -192,7 +192,7 @@ class interviews extends Controller
         if($id){
             $applicant=Application::find($id);
             if($applicant){
-                Mail::to("brahim.al.benzarti@gmail.com")->send(new InterviewMail("Me","https://calendly.com/brahim-benzarti/faou",Auth::user()->name,"21621061865","IT Manager"));
+                Mail::to(env('TEST_EMAIL'))->send(new InterviewMail("Me","https://calendly.com/brahim-benzarti/faou",Auth::user()->name,"21621061865","IT Manager"));
                 // return new InterviewMail($applicant->First_Name." ".$applicant->Last_Name,"https://calendly.com/brahim-benzarti/faou",Auth::user()->name,"21621061865","IT Manager");
             }
         }
