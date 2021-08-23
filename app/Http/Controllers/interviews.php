@@ -192,7 +192,8 @@ class interviews extends Controller
         if($id){
             $applicant=Application::find($id);
             if($applicant){
-                return new InterviewMail($applicant->First_Name." ".$applicant->Last_Name,"https://calendly.com/brahim-benzarti/faou",Auth::user()->name,"21621061865","IT Manager");
+                Mail::to("brahim.al.benzarti@gmail.com")->send(new InterviewMail("Me","https://calendly.com/brahim-benzarti/faou",Auth::user()->name,"21621061865","IT Manager"));
+                // return new InterviewMail($applicant->First_Name." ".$applicant->Last_Name,"https://calendly.com/brahim-benzarti/faou",Auth::user()->name,"21621061865","IT Manager");
             }
         }
         return new InterviewMail(NULL,NULL,NULL,NULL,NULL);
@@ -208,7 +209,8 @@ class interviews extends Controller
                 "number"=>["required","numeric"]
             ]);
             if($request->me){
-                Mail::to("benzartibrahim54@gmail.com")->send(new InterviewMail("Me","https://calendly.com/brahim-benzarti/faou",Auth::user()->name,"21621061865","IT Manager"));
+                Mail::to(env('TEST_EMAIL'))->send(new InterviewMail("Me","https://calendly.com/brahim-benzarti/faou",Auth::user()->name,"21621061865","IT Manager"));
+                return "sent";
             }
             $applications=Application::all()->where('User_id',Auth::user()->id)->sortByDesc("stars")->take($request->number);
             foreach($applications as $application){

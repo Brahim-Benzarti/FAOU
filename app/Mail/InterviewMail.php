@@ -40,6 +40,6 @@ class InterviewMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.interview')->attach("/icons/icon.png");
+        return $this->markdown('emails.interview')->subject("FAOU Autumn 2021 Hiring Process - Interviews");
     }
 }

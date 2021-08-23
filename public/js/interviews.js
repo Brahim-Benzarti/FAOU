@@ -30,7 +30,7 @@ $(()=>{
                 "me":$("#copy").prop("checked")
             },
             (data,stat)=>{
-
+                console.log(data);
             }
         );
     });
