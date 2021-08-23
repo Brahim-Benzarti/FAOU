@@ -37,7 +37,7 @@
     <div class="row align-items-center flex-column mt-4">
         <a id="send" href="#" class="btn btn-primary">Send Interview Emails</a>
         <div>
-            <label for="copy">Get a copy</label>
+            <label for="copy">Only Me</label>
             <input type="checkbox" name="copy" id="copy">
         </div>              
     </div>
