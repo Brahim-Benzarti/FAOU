@@ -212,11 +212,15 @@ class interviews extends Controller
                 Mail::to(env('TEST_EMAIL'))->send(new InterviewMail("Me","https://calendly.com/brahim-benzarti/faou",Auth::user()->name,"21621061865","IT Manager"));
                 return "sent";
             }else{
+                $i=0;
+                $emails="";
                 $applications=Application::all()->where('User_id',Auth::user()->id)->sortByDesc("stars")->take($request->number);
                 foreach($applications as $application){
-                    Mail::to($application->Email)->send(new InterviewMail($application->First_Name." ".$application->Last_Name,"https://calendly.com/brahim-benzarti/faou",Auth::user()->name,"21621061865","IT Manager"));
+                    Mail::to($application->Email)->send(new InterviewMail($application->First_Name." ".$application->Last_Name,$request->link,Auth::user()->name,"21621061865","IT Manager"));
+                    $emails+=$application->Email." ";
+                    $i++;
                 }
-                return "sent";
+                return "sent".$i." ".$emails;
             }
         }
     }
