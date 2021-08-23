@@ -11,6 +11,7 @@ use Maatwebsite\Excel\HeadingRowImport;
 use Illuminate\Validation\Rule;
 use App\Models\Application;
 use Illuminate\Support\Facades\Http; 
+use Auth;
 
 class interviews extends Controller
 {
@@ -42,7 +43,7 @@ class interviews extends Controller
 
 
     public function view(Request $request, $page = 1){
-        $applications= Application::all();
+        $applications= Application::all()->where('User_id',Auth::user()->id);
         if(count($applications)){
             return view('viewapplications',[
                 "accepted"=>$applications->where("accepted",1)->count(),
@@ -57,7 +58,7 @@ class interviews extends Controller
     }
 
     public function pending(Request $request, $page){
-        $applications= Application::all()->where("seen",0);
+        $applications= Application::all()->where('User_id',Auth::user()->id)->where("seen",0);
         if(!$applications->count()){
             return "<div class='display-2' style='margin:auto;width:fit-content;'>You're Done</div>";
         }
@@ -81,7 +82,7 @@ class interviews extends Controller
             "flagged"=>["required"],
             "incomplete"=>["required"]
         ]);
-        $applications= Application::all()->where("seen",1);
+        $applications= Application::all()->where('User_id',Auth::user()->id)->where("seen",1);
         if(!$applications->count()){
             return "<div class='display-2' style='margin:auto;width:fit-content;'>Nothing Here!</div>";
         }
@@ -113,7 +114,7 @@ class interviews extends Controller
     public function viewone(Request $request,$index){
         if($request->method()=="GET"){
             if($index){
-                $application=Application::find($index);
+                $application=Application::where('User_id',Auth::user()->id)->find($index);
                 if($application){
                     if($application->seen=='0'){
                         $application->seen='1';
@@ -145,7 +146,7 @@ class interviews extends Controller
             $this->validate($request, [
                 "event"=>["required",Rule::in(["Interview","Flag","Incomplete","Reject","star1","star2","star3","star4","star5"])]
             ]);
-            $application=Application::find($index);
+            $application=Application::where('User_id',Auth::user()->id)->find($index);
             if($request->event=="Interview"){
                 $application->accepted="1";
             }
