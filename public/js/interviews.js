@@ -21,6 +21,7 @@ $(()=>{
         );
     });
     $("#send").click(()=>{
+        console.log($("#copy").prop("checked"));
         $.post(
             '/email/interview',
             {
