@@ -3,6 +3,11 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
+        <div class="col-md-8" style="text-align:center;">
+            <div class="text-danger">Make sure that the file provided follow a certain Heading row. <a href="{{asset('files/template.xlsx')}}">Download Template</a></div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
         <div class="col-md-8 dash d-flex justify-content-center align-items-center @error('csvfile') is-invalid @enderror">
             <form id="myform" method="POST" enctype="multipart/form-data">
                 @csrf

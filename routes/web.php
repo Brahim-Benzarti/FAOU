@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function (){
         Route::post('/pending/{page?}', [App\Http\Controllers\interviews::class, "pending"])->name("viewpending");
         Route::post('/seen/{page?}', [App\Http\Controllers\interviews::class, "seen"])->name("viewseen");
     });
-
+    Route::get('/Download_Result' ,[App\Http\Controllers\interviews::class, "download"])->name("backupdownload");
 });
 
 Auth::routes();

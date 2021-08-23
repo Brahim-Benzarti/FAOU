@@ -48,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-2">
+            <div class="row mt-3">
                 <div class="col">
                     <h3>Info</h3><hr>
                 </div>
@@ -70,6 +70,16 @@
                     <div class="col" style="padding:0;">
                         Pending: {{$seen}}
                     </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    <h3>Assets</h3><hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a href="{{route('backupdownload')}}">Download result</a>
                 </div>
             </div>
         </div>
