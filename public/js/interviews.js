@@ -1,13 +1,13 @@
 $(()=>{
-    $.post(
-        '/mail',
-        {
-            "_token":$("meta[name='csrf-token']").attr("content")
-        },
-        (data,stat)=>{
-            $('#mail').html(data);
-        }
-    );
+    // $.post(
+    //     '/mail',
+    //     {
+    //         "_token":$("meta[name='csrf-token']").attr("content")
+    //     },
+    //     (data,stat)=>{
+    //         $('#mail').html(data);
+    //     }
+    // );
     $("#number").change(()=>{
         $.post(
             '/peoplelist',

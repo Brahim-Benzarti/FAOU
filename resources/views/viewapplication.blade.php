@@ -1,6 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+.star{
+    opacity: 1;
+}
+.star:hover{
+    transform: scale(1.2);
+}
+.blurstar{
+    opacity: 0.3;
+}
+.blurstar:hover{
+    transform: scale(1.2);
+    opacity: 1;
+}
+.blurstar:hover ~ img.blurstar{
+    opacity: 1;
+}
+</style>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-3">
@@ -56,17 +74,17 @@
         </div>
     </div>
     <div class="row mt-5 justify-content-between">
-        <div class="col">
-            @for($i=1;$i<=5;$i++)
-            <img src="@if($i==5){{asset('icons/fifthstar.png')}}@else{{asset('icons/star.png')}}@endif" id="{{'star'.$i}}" style="@if($application->stars<$i) opacity:0.3 @endif">
+        <div class="starcol col-3 d-flex flex-row-reverse">
+            @for($i=5;$i>=1;$i--)
+                <img src="@if($i==5){{asset('icons/fifthstar.png')}}@else{{asset('icons/star.png')}}@endif" id="{{'star'.$i}}"  class=" @if($i<=$application->stars) star @else blurstar @endif">
             @endfor
         </div>
-        <div class="col d-flex justify-content-around">
+        <div class="col-6 d-flex justify-content-around">
             <meta id="id" content="{{$application->id}}">
-            <button value="Flag" id="Flag" class="btn btn-warning"><span></span> <span>Flag</span> </button>
-            <button value="Incomplete" id="Incomplete" class="btn btn-danger"><span></span> <span>Incomplete</span></button>
-            <button value="Interview" id="Interview" class="btn btn-success"><span></span> <span>Interview</span></button>
-            <button value="Reject" id="Reject" class="btn btn-danger"><span></span> <span>Reject</span></button>
+            <button value="Flag" id="Flag" class="btn btn-warning"><span></span> <span>@if($application->flag==1)Remove Flag @else Flag @endif</span></button>
+            <button value="Incomplete" id="Incomplete" class="btn btn-danger"><span></span> <span>@if($application->incomplete==1)Incomplete @else Completed @endif</span></button>
+            <button value="Interview" id="Interview" class="btn btn-success"><span></span> <span>@if($application->interview==1)Cancel Interview @else Interview @endif</span></button>
+            <button value="Reject" id="Reject" class="btn btn-danger"><span></span> <span>@if($application->reject==1)Remove Reject @else Reject  @endif</span></button>
         </div>
     </div>
     <div class="row mt-5">

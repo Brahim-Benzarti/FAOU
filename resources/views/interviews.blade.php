@@ -29,7 +29,14 @@
         </div>
         <div class="col-lg-5 d-flex align-items-center flex-column">
             <h4>Email Preview</h4>
-            <div id="mail" style="height:510px;width:100%;position:relative;overflow:scroll;">
+            {{-- dynamic --}}
+            {{-- <div id="mail" style="height:510px;width:100%;position:relative;overflow:scroll;">
+                <img src="{{asset('icons/edit.png')}}" alt="edit" style="position:absolute;top:10px;right:10px;">
+            </div> --}}
+
+            {{-- static --}}
+            <div id="mail" style="height:510px;width:100%;position:relative;">
+                <img src="{{asset('images/email_prev.png')}}" alt="" style="width:100%;height:100%;">
                 <img src="{{asset('icons/edit.png')}}" alt="edit" style="position:absolute;top:10px;right:10px;">
             </div>
         </div>

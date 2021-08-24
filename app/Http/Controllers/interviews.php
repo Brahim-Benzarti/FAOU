@@ -149,23 +149,48 @@ class interviews extends Controller
                 "event"=>["required",Rule::in(["Interview","Flag","Incomplete","Reject","star1","star2","star3","star4","star5"])]
             ]);
             $application=Application::where('User_id',Auth::user()->id)->find($index);
+            $msg="";
             if($request->event=="Interview"){
-                $application->accepted="1";
+                if($application->accepted=="1"){
+                    $application->accepted="0";
+                    $msg="Interview";
+                }else{
+                    $application->accepted="1";
+                    $msg="Cancel Interview";
+                }
             }
             if($request->event=="Flag"){
-                $application->flag="1";
+                if($application->flag=="1"){
+                    $application->flag="0";
+                    $msg="Flag";
+                }else{
+                    $application->flag="1";
+                    $msg="Remove Flag";
+                }
             }
             if($request->event=="Incomplete"){
-                $application->incomplete="1";
+                if($application->incomplete=="1"){
+                    $application->incomplete="0";
+                    $msg="Completed";
+                }else{
+                    $application->incomplete="1";
+                    $msg="Incomplete";
+                }
             }
             if($request->event=="Reject"){
-                $application->rejected="1";
+                if($application->rejected=="1"){
+                    $application->rejected="0";
+                    $msg="Reject";
+                }else{
+                    $application->rejected="1";
+                    $msg="Remove Rejection";
+                }
             }
             if(strstr($request->event,"star")){
                 $application->stars=substr($request->event,4,1);
             }
             $application->save();
-            return "ok";
+            return $msg;
         }
     }
 
@@ -192,8 +217,8 @@ class interviews extends Controller
         if($id){
             $applicant=Application::find($id);
             if($applicant){
-                Mail::to(env('TEST_EMAIL'))->send(new InterviewMail("Me","https://calendly.com/brahim-benzarti/faou",Auth::user()->name,"21621061865","IT Manager"));
-                // return new InterviewMail($applicant->First_Name." ".$applicant->Last_Name,"https://calendly.com/brahim-benzarti/faou",Auth::user()->name,"21621061865","IT Manager");
+                // Mail::to(env('TEST_EMAIL'))->send(new InterviewMail("Me","https://calendly.com/brahim-benzarti/faou",Auth::user()->name,"21621061865","IT Manager"));
+                return new InterviewMail($applicant->First_Name." ".$applicant->Last_Name,"https://calendly.com/brahim-benzarti/faou",Auth::user()->name,"21621061865","IT Manager");
             }
         }
         return new InterviewMail(NULL,NULL,NULL,NULL,NULL);
@@ -202,7 +227,7 @@ class interviews extends Controller
 
     public function interview(Request $request){
         if($request->method()=="GET"){
-            return new InterviewMail("Barhoum","https://www.google.com");
+            return new InterviewMail(NULL,NULL,NULL,NULL,NULL);
         }else if($request->method()=="POST"){
             $this->validate($request,[
                 "link"=>["required","string"],
@@ -217,7 +242,7 @@ class interviews extends Controller
                 $emails="";
                 $applications=Application::all()->where('User_id',Auth::user()->id)->sortByDesc("stars")->take($request->number);
                 foreach($applications as $application){
-                    Mail::to($application->Email)->send(new InterviewMail($application->First_Name." ".$application->Last_Name,$request->link,Auth::user()->name,"21621061865","IT Manager"));
+                    // Mail::to($application->Email)->send(new InterviewMail($application->First_Name." ".$application->Last_Name,$request->link,Auth::user()->name,"21621061865","IT Manager"));
                     $emails.=$application->Email." ";
                     $i++;
                 }
