@@ -23,7 +23,9 @@ class interviews extends Controller
 
     public function add(Request $request){
         if($request->method()=="GET"){
-            return view('addapplication');
+            return view('addapplication',[
+                "success"=>""
+            ]);
         }else if($request->method()=="POST"){
             $this->validate($request,[
                 "csvfile"=>["required","file","mimes:csv,xlsx,xlsm,xlsb,xltx,xltm,xls,xlt,xls"]
@@ -37,8 +39,10 @@ class interviews extends Controller
 
 
             $h=["submission_time","first_name","last_name","email","nationality","birthday","position_you_want_to_apply_for","is_this_your_first_time_applying","share_your_linkedin_profile_or_online_cv","brief_biography_max_1000_character","motivation_letter_max_3000_charcter"];
+
+
             Excel::import(new ApplicationsImport,$request->csvfile);
-            return redirect()->route("AddApplications",["success"=>1]);
+            return redirect()->route("viewdefault");
         }
     }
 
@@ -55,7 +59,9 @@ class interviews extends Controller
                 "seen"=>$applications->where("seen",0)->count()
             ]);
         }else{
-            return redirect()->route("AddApplications");
+            return redirect()->route("AddApplications", [
+                "success"=>""
+            ]);
         }
     }
 

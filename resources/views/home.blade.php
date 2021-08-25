@@ -27,7 +27,7 @@
                 <div class="display-3">{{Auth::user()->name}}</div>
             </div>
             <div>
-                <h3>{{Auth::user()->position}}</h3>
+                <h1>{{Auth::user()->position}}</h1>
                 @if($dep_num)
                 <h3>Managing</h3>
                 <div>

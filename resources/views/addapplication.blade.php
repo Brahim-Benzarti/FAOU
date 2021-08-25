@@ -17,7 +17,8 @@
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="col-md-8 d-flex justify-content-center bg-danger" style="color:white;">
+        <div class="col-md-8 d-flex justify-content-center @error('csvfile') bg-danger @enderror" style="color:white;">
+            @if($success===0)<strong>Records added successfully!</strong>@elseif($success===0)<strong>There was a problem!</strong>@endif
             @error('csvfile')<strong>{{ $message }}</strong> @enderror
         </div>
     </div>

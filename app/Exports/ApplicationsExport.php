@@ -7,8 +7,9 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Auth;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 
-class ApplicationsExport implements FromCollection, WithHeadings
+class ApplicationsExport implements FromCollection, WithHeadings, WithMapping
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -18,31 +19,51 @@ class ApplicationsExport implements FromCollection, WithHeadings
         return Application::all()->where("User_id",Auth::user()->id);
     }
 
+    public function map($row): array{
+        return [
+            $row->Time,
+            $row->First_Name,
+            $row->Last_Name,
+            $row->Email,
+            $row->Nationality,
+            $row->Birthday,
+            $row->Position,
+            $row->First_Time,
+            $row->CV,
+            $row->Biography,
+            $row->Motivation_Letter,
+            $row->seen,
+            $row->flag,
+            $row->accepted,
+            $row->rejected,
+            $row->stars,
+            $row->incomplete,
+            $row->new,
+            $row->interviewed,
+        ];
+    }
     public function headings(): array
     {
         return [
-            '#',
-            'Time',
-            'First_Name',
-            'Last_Name',
+            'Submission Time',
+            'First Name',
+            'Last Name',
             'Email',
             'Nationality',
             'Birthday',
-            'Position',
-            'First_Time',
-            'CV',
-            'Biography',
-            'Motivation_Letter',
-            'User_id',
-            'Users_Access',
-            'seen',
-            'flag',
-            'incomplete',
-            'accepted',
-            'rejected',
-            'stars',
-            'created at',
-            'updated at'
+            'Position you want to apply for',
+            'Is this your first time applying',
+            'Share your linkedin profile or online CV',
+            'Brief biography max 1000 character',
+            'Motivation Letter max 3000 character',
+            'Seen',
+            'Flag',
+            'Accepted',
+            'Rejected',
+            'Stars',
+            'Incomplete',
+            'New',
+            'Interviewed'
         ];
     }
 }
