@@ -28,12 +28,14 @@ class CreateApplicationsTable extends Migration
             $table->String("Motivation_Letter",3500)->nullable();
             $table->String("User_id");
             $table->String("Users_Access")->nullable();
-            $table->enum("seen",array(0,1))->default(0);
-            $table->enum("flag",array(0,1))->default(0);
-            $table->enum("incomplete",array(0,1))->default(0);
-            $table->enum("accepted",array(0,1))->default(0);
-            $table->enum("rejected",array(0,1))->default(0);
-            $table->enum("stars",array(0,1,2,3,4,5));
+            $table->String("seen")->default(0);
+            $table->String("flag")->default(0);
+            $table->String("incomplete")->default(0);
+            $table->String("accepted")->default(0);
+            $table->String("rejected")->default(0);
+            $table->String("stars")->default(0);
+            $table->String("new")->default(1);
+            $table->String("interviewed")->default(0);
             $table->timestamps();
         });
     }

@@ -42,3 +42,4 @@ Route::middleware('auth')->group(function (){
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::match(['get','post'], '/Update_Profile', [App\Http\Controllers\HomeController::class, 'edit'])->name('profileEdit');
