@@ -18,21 +18,21 @@
 </td>
 <td align="center">
 {{-- second column --}}
-<img src="{{asset('icons/phone.png')}}" class="mail_contact" alt=""> <a class="mail_text_contact" href="tel:{{$phone}}">{{$phone}}</a> || <a class="mail_text_contact" href="tel:+212620224060">+212620224060</a>
+<img src="{{asset('icons/phone.png')}}" class="mail_contact" alt="" style="height:10px;max-height:10px;width:10px;"> <a class="mail_text_contact" href="tel:{{$phone}}">{{$phone}}</a> || <a class="mail_text_contact" href="tel:+212620224060">+212620224060</a>
 <br>
-<img src="{{asset('icons/mail.png')}}" class="mail_contact" alt=""> <a class="mail_text_contact" href="mailto:contact@alfihri.org">contact@alfihri.org</a>
+<img src="{{asset('icons/mail.png')}}" class="mail_contact" alt="" style="height:10px;max-height:10px;width:10px;"> <a class="mail_text_contact" href="mailto:contact@alfihri.org">contact@alfihri.org</a>
 <br>
-<img src="{{asset('icons/link.png')}}" class="mail_contact" alt=""> <a class="mail_text_contact" href="http://www.alfihri.org">www.alfihri.org</a>
+<img src="{{asset('icons/link.png')}}" class="mail_contact" alt="" style="height:10px;max-height:10px;width:10px;"> <a class="mail_text_contact" href="http://www.alfihri.org">www.alfihri.org</a>
 <br>
-<img src="{{asset('icons/location.png')}}" class="mail_contact" alt=""> <a class="mail_text_contact" href="http://">Tallinn, Estonia.</a>
+<img src="{{asset('icons/location.png')}}" class="mail_contact" alt="" style="height:10px;max-height:10px;width:10px;"> <a class="mail_text_contact" href="http://">Tallinn, Estonia.</a>
 </tr>
 </table>
 <div align="center" width="100%">
-<a href="https://www.facebook.com/enFAOU"><img class="mail_links" src="{{asset('icons/facebook.png')}}" alt="facebook icon"></a>
-<a href="https://twitter.com/enFAOU"><img class="mail_links" src="{{asset('icons/twitter.png')}}" alt="twitter icon"></a>
-<a href="https://www.youtube.com/channel/UCpxOvkfMmAO5dzEVrweyF1g"><img class="mail_links" src="{{asset('icons/youtube.png')}}" alt="youtube icon"></a>
-<a href="https://www.linkedin.com/company/enfaou/mycompany/"><img class="mail_links" src="{{asset('icons/linkedin.png')}}" alt="linkedin icon"></a>
-<a href="https://www.instagram.com/enfaou/"><img class="mail_links" src="{{asset('icons/instagram.png')}}" alt="linkedin icon"></a>
+<a href="https://www.facebook.com/enFAOU"><img class="mail_links" src="{{asset('icons/facebook.png')}}" alt="facebook icon" style="height:20px;max-height:20px;width:20px;margin-right:5px;"></a>
+<a href="https://twitter.com/enFAOU"><img class="mail_links" src="{{asset('icons/twitter.png')}}" alt="twitter icon" style="height:20px;max-height:20px;width:20px;margin-right:5px;"></a>
+<a href="https://www.youtube.com/channel/UCpxOvkfMmAO5dzEVrweyF1g"><img class="mail_links" src="{{asset('icons/youtube.png')}}" alt="youtube icon" style="height:20px;max-height:20px;width:20px;margin-right:5px;"></a>
+<a href="https://www.linkedin.com/company/enfaou/mycompany/"><img class="mail_links" src="{{asset('icons/linkedin.png')}}" alt="linkedin icon" style="height:20px;max-height:20px;width:20px;margin-right:5px;"></a>
+<a href="https://www.instagram.com/enfaou/"><img class="mail_links" src="{{asset('icons/instagram.png')}}" alt="linkedin icon" style="height:20px;max-height:20px;width:20px;margin-right:5px;"></a>
 </div>
 </div>
 

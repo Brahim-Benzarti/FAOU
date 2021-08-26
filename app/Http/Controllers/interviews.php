@@ -224,8 +224,8 @@ class interviews extends Controller
             $applicant=Application::find($id);
             if($applicant){
                 $user=Auth::user();
-                // Mail::to(env('TEST_EMAIL'))->send(new InterviewMail("Me","https://calendly.com/brahim-benzarti/faou",Auth::user()->name,"21621061865","IT Manager"));
-                return new InterviewMail($applicant->First_Name." ".$applicant->Last_Name,"https://calendly.com/brahim-benzarti/faou",$user->name,$user->number,$user->position);
+                // Mail::to(env('TEST_EMAIL'))->send(new InterviewMail("Me","https://calendly.com/brahim-benzarti",$user->name,$user->number,$user->position);
+                return new InterviewMail($applicant->First_Name." ".$applicant->Last_Name,"https://calendly.com/brahim-benzarti",$user->name,$user->number,$user->position);
             }
         }
         return new InterviewMail(NULL,NULL,NULL,NULL,NULL);
@@ -252,7 +252,7 @@ class interviews extends Controller
                 $applications=Application::where('User_id',Auth::user()->id)->where("new",1)->where("mailed",0)->orderBy("stars","desc")->take($request->number)->get();
                 foreach($applications as $application){
                     if(env("APP_ENV")!=="local"){
-                        Mail::to($application->Email)->send(new InterviewMail($application->First_Name." ".$application->Last_Name,$request->link,$user->name,$user->number,$user_position));
+                        Mail::to($application->Email)->send(new InterviewMail($application->First_Name." ".$application->Last_Name,$request->link,$user->name,$user->number,$user->position));
                         $application->mailed=1;
                         $application->save();
                     }
