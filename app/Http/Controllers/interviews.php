@@ -251,9 +251,11 @@ class interviews extends Controller
                 $emails="";
                 $applications=Application::where('User_id',Auth::user()->id)->where("new",1)->where("mailed",0)->orderBy("stars","desc")->take($request->number)->get();
                 foreach($applications as $application){
-                    Mail::to($application->Email)->send(new InterviewMail($application->First_Name." ".$application->Last_Name,$request->link,$user->name,$user->number,$user_position));
-                    $application->mailed=1;
-                    $application->save();
+                    if(env("APP_ENV")!=="local"){
+                        Mail::to($application->Email)->send(new InterviewMail($application->First_Name." ".$application->Last_Name,$request->link,$user->name,$user->number,$user_position));
+                        $application->mailed=1;
+                        $application->save();
+                    }
                     $emails.=$application->Email." ";
                     $i++;
                 }
