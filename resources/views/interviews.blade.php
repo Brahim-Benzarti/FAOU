@@ -13,7 +13,7 @@
                 <div class="form-group">
                     <label for="link">Link of Interviews</label>
                     <input type="text" id="link" name="link" class="form-control">
-                    <a class="link-success" href="https://calendly.com/" targe="_blank">Make link</a>
+                    <a class="link-success" href="https://calendly.com/" target="_blank">Make link</a>
                 </div>
                 <label for="number">People Getting the Invitation</label>
                 <div id="people" style="overflow-y:scroll;overflow-x:hidden;height:350px;width:100%;">
@@ -43,10 +43,11 @@
     </div>
     <div class="row align-items-center flex-column mt-4">
         <a id="send" href="#" class="btn btn-primary">Send Interview Emails</a>
-        <div>
+        <div class="mt-2">
             <label for="copy">Only Me</label>
             <input type="checkbox" name="copy" id="copy">
-        </div>              
+        </div>          
+        @if(env('MAIL_HOST')=='smtp.googlemail.com')<a target="_blank" href="https://accounts.google.com/b/0/DisplayUnlockCaptcha">Disable Captcha</a>@endif
     </div>
 </div>
 <script src="{{asset('js/jquery.js')}}"></script>

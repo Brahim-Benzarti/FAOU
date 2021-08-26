@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,5 +42,6 @@ Route::middleware('auth')->group(function (){
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::match(['get','post'], '/Update_Profile', [App\Http\Controllers\HomeController::class, 'edit'])->name('profileEdit');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::match(['get','post'], '/Update_Profile', [HomeController::class, 'edit'])->name('profileEdit');
+Route::post('/newseason', [HomeController::class ,'newseason'])->name("newSeason");

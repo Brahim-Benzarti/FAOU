@@ -62,6 +62,12 @@
                             @endif
                         </div>
                     </div>
+                    <div class="row justify-content-center">
+                        <form action="{{Route('newSeason')}}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-primary" >Start a new season</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

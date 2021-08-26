@@ -18,7 +18,7 @@
 </td>
 <td align="center">
 {{-- second column --}}
-<img src="{{asset('icons/phone.png')}}" class="mail_contact" alt=""> <a class="mail_text_contact" href="tel:+{{$phone}}">+{{$phone}}</a> || <a class="mail_text_contact" href="tel:+212620224060">+212620224060</a>
+<img src="{{asset('icons/phone.png')}}" class="mail_contact" alt=""> <a class="mail_text_contact" href="tel:{{$phone}}">{{$phone}}</a> || <a class="mail_text_contact" href="tel:+212620224060">+212620224060</a>
 <br>
 <img src="{{asset('icons/mail.png')}}" class="mail_contact" alt=""> <a class="mail_text_contact" href="mailto:contact@alfihri.org">contact@alfihri.org</a>
 <br>

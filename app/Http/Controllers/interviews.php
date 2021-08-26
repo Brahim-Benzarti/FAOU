@@ -49,7 +49,7 @@ class interviews extends Controller
 
 
     public function view(Request $request, $page = 1){
-        $applications= Application::all()->where('User_id',Auth::user()->id);
+        $applications= Application::where('User_id',Auth::user()->id)->where("new",1)->get();
         if(count($applications)){
             return view('viewapplications',[
                 "accepted"=>$applications->where("accepted",1)->count(),
@@ -66,7 +66,7 @@ class interviews extends Controller
     }
 
     public function pending(Request $request, $page){
-        $applications= Application::all()->where('User_id',Auth::user()->id)->where("seen",0);
+        $applications= Application::where('User_id',Auth::user()->id)->where("new",1)->where("seen",0);
         if(!$applications->count()){
             return "<div class='display-2' style='margin:auto;width:fit-content;'>You're Done</div>";
         }
@@ -90,7 +90,7 @@ class interviews extends Controller
             "flagged"=>["required"],
             "incomplete"=>["required"]
         ]);
-        $applications= Application::all()->where('User_id',Auth::user()->id)->where("seen",1);
+        $applications= Application::where('User_id',Auth::user()->id)->where("new",1)->where("seen",1)-get();
         if(!$applications->count()){
             return "<div class='display-2' style='margin:auto;width:fit-content;'>Nothing Here!</div>";
         }
@@ -211,7 +211,7 @@ class interviews extends Controller
         $this->validate($request,[
             "number"=>["required","numeric"]
         ]);
-        $applications=Application::all()->where('User_id',Auth::user()->id)->sortByDesc("stars")->take($request->number);
+        $applications=Application::where('User_id',Auth::user()->id)->where("new",1)->where("mailed",0)->orderBy("stars","desc")->take($request->number)->get();
         return view("peoplelist",[
             "applications"=>$applications
         ]);
@@ -223,8 +223,9 @@ class interviews extends Controller
         if($id){
             $applicant=Application::find($id);
             if($applicant){
+                $user=Auth::user();
                 // Mail::to(env('TEST_EMAIL'))->send(new InterviewMail("Me","https://calendly.com/brahim-benzarti/faou",Auth::user()->name,"21621061865","IT Manager"));
-                return new InterviewMail($applicant->First_Name." ".$applicant->Last_Name,"https://calendly.com/brahim-benzarti/faou",Auth::user()->name,"21621061865","IT Manager");
+                return new InterviewMail($applicant->First_Name." ".$applicant->Last_Name,"https://calendly.com/brahim-benzarti/faou",$user->name,$user->number,$user->position);
             }
         }
         return new InterviewMail(NULL,NULL,NULL,NULL,NULL);
@@ -241,14 +242,18 @@ class interviews extends Controller
                 "me"=>["required"]
             ]);
             if($request->boolean('me')){
-                Mail::to(env('TEST_EMAIL'))->send(new InterviewMail("Me","https://calendly.com/brahim-benzarti/faou",Auth::user()->name,"21621061865","IT Manager"));
+                $user=Auth::user();
+                Mail::to(env('TEST_EMAIL'))->send(new InterviewMail("Me",$request->link,$user->name,$user->number,$user->position));
                 return "sent";
             }else{
+                $user=Auth::user();
                 $i=0;
                 $emails="";
-                $applications=Application::all()->where('User_id',Auth::user()->id)->sortByDesc("stars")->take($request->number);
+                $applications=Application::where('User_id',Auth::user()->id)->where("new",1)->where("mailed",0)->orderBy("stars","desc")->take($request->number)->get();
                 foreach($applications as $application){
-                    // Mail::to($application->Email)->send(new InterviewMail($application->First_Name." ".$application->Last_Name,$request->link,Auth::user()->name,"21621061865","IT Manager"));
+                    Mail::to($application->Email)->send(new InterviewMail($application->First_Name." ".$application->Last_Name,$request->link,$user->name,$user->number,$user_position));
+                    $application->mailed=1;
+                    $application->save();
                     $emails.=$application->Email." ";
                     $i++;
                 }

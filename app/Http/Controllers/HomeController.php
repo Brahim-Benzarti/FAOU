@@ -7,6 +7,7 @@ use App\Models\Application;
 use App\Models\User;
 use Auth;
 use Illuminate\Support\Facades\Http; 
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -81,5 +82,9 @@ class HomeController extends Controller
                 $user->save();
             }
         }
+    }
+    public function newseason(Request $request){
+        DB::update("update applications set new=0 where User_id = ? and new = 1", [Auth::user()->id]);
+        return redirect()->route('home');
     }
 }

@@ -46,7 +46,7 @@ class ApplicationsImport implements ToModel, WithHeadingRow
             "First_Time"=>$row['is_this_your_first_time_applying'],
             "CV"=> strlen($row['share_your_linkedin_profile_or_online_cv'])<1000 ? $row['share_your_linkedin_profile_or_online_cv'] : Null,
             "Biography"=>$row['brief_biography_max_1000_character'],
-            "Motivation_Letter"=>$row['motivation_letter_max_3000_charcter'], 
+            "Motivation_Letter"=>$row['motivation_letter_max_3000_character'], 
             "User_id"=>Auth::user()->id,
             "seen"=>$row['seen'] ?? "0",
             "flag"=>$row['flag'] ?? "0",
@@ -55,7 +55,8 @@ class ApplicationsImport implements ToModel, WithHeadingRow
             'stars'=>$row['stars'] ?? "0",
             "incomplete"=>$row['incomplete'] ?? "0",
             "new"=>$row['new'] ?? "1",
-            "interviewed"=>$row['interviewed'] ?? "0"
+            "interviewed"=>$row['interviewed'] ?? "0",
+            "mailed"=>$row['mailed'] ?? "0"
         ]);
     }
 }
