@@ -28,11 +28,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $departments=Application::all()->where('User_id',Auth::user()->id)->groupBy("Position");
+        // $departments=Application::select("Position")->where('User_id',Auth::user()->id)->groupBy("Position")->get();
+        // in this case we used the all because we need the information for other fields.. without the all() laravel will make 3 queries.
+        $departments=Application::all()->where('User_id',Auth::user()->id)->where('new',1)->groupBy("Position");
         $topass=[];
         if($departments){
-            foreach($departments as $department=>$val){
-                array_push($topass,array($department,$val->where("seen",0)->count(),$val->count()));
+            foreach($departments as $department=>$applications){
+                array_push($topass,array($department,$applications->where("seen",0)->count(),$applications->count()));
             }
         }
         return view('home',[
