@@ -73,7 +73,7 @@ class interviews extends Controller
         $pages=ceil($applications->count()/10);
         if($page<=$pages){
             return view("applicationlist",[
-                "applications"=>$applications->skip(($page-1)*10)->take(10),
+                "applications"=>$applications->skip(($page-1)*10)->take(10)->get(),
                 "pages"=>$pages,
                 "current_page"=>$page,
                 "doing"=>"pending"
@@ -90,7 +90,7 @@ class interviews extends Controller
             "flagged"=>["required"],
             "incomplete"=>["required"]
         ]);
-        $applications= Application::where('User_id',Auth::user()->id)->where("new",1)->where("seen",1)-get();
+        $applications= Application::where('User_id',Auth::user()->id)->where("new",1)->where("seen",1)->get();
         if(!$applications->count()){
             return "<div class='display-2' style='margin:auto;width:fit-content;'>Nothing Here!</div>";
         }
