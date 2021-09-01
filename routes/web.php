@@ -38,6 +38,11 @@ Route::middleware('auth')->group(function (){
     Route::post('peoplelist', [App\Http\Controllers\interviews::class, "people"])->name("people");
     Route::post('mail/{id?}', [App\Http\Controllers\interviews::class, "mail"]);
     Route::get('mail/{id?}', [App\Http\Controllers\interviews::class, "mail"]);
+
+    Route::prefix('EditEmail')->group(function(){
+        Route::get('/{for}', [EmailController::class, 'index'])->name('editmail');
+        Route::post('/{for}', [EmailController::class, 'index']);
+    });
 });
 
 Auth::routes();
