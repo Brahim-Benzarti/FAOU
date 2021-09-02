@@ -278,7 +278,7 @@ class interviews extends Controller
                 foreach($applications as $application){
                     if(env("APP_ENV")!=="local"){
                         Mail::to($application->Email)->send(new InterviewMail($application->First_Name." ".$application->Last_Name,$request->link,$user->name,$user->number,$user->position));
-                        $application->mailed=1;
+                        $application->mailed="1";
                         $application->save();
                     }
                     $emails.=$application->Email." ";
