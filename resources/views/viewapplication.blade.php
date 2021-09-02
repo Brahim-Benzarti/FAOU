@@ -93,6 +93,5 @@
         </div>
     </div>
 </div>
-<script src="{{asset('js/jquery.js')}}"></script>
 <script src="{{asset('js/viewapp.js')}}"></script>
 @endsection

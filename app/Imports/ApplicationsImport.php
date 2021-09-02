@@ -56,7 +56,8 @@ class ApplicationsImport implements ToModel, WithHeadingRow
             "incomplete"=>$row['incomplete'] ?? "0",
             "new"=>$row['new'] ?? "1",
             "interviewed"=>$row['interviewed'] ?? "0",
-            "mailed"=>$row['mailed'] ?? "0"
+            "mailed"=>$row['mailed'] ?? "0",
+            "intern"=>$row['intern'] ?? "0"
         ]);
     }
 }

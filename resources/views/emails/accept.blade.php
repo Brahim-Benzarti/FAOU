@@ -5,10 +5,6 @@ Dear **{{$Applicant_Name ?? "Applicant Name"}}**,
 
 {{$body}}
 
-@component('mail::button', ['url' => $Meeting_Link ?? "www.link.com", 'color'=> 'blue'])
-Book your interview
-@endcomponent
-
 @isset($footer)
 @component('mail::subcopy')
 {{$footer}}

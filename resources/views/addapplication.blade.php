@@ -28,7 +28,6 @@
         </div>
     </div>
 </div>
-<script src="{{asset('js/jquery.js')}}"></script>
 <script src="{{asset('js/addapp.js')}}"></script>
 <link rel="stylesheet" href="{{asset('css/addapp.css')}}">
 @endsection

@@ -18,7 +18,23 @@ use Illuminate\Support\Facades\Mail;
 class interviews extends Controller
 {
     public function index(){
-        return view('interviews');
+        $res=Application::where('User_id',Auth::user()->id)->where("new","1")->where('rejected','0')->where('accepted','1')->where("mailed","1")->get();
+        $sent=0;
+        if($res->count()){
+            $sent=1;
+        }
+        return view('interviews',[
+            "sent"=>$sent,
+            "applicants"=>$sent ? $res : null
+        ]);
+    }
+
+    public function acceptance(){
+        return view('sendacceptance');
+    }
+
+    public function interviews(){
+        return view('sendinterviews');
     }
 
     public function add(Request $request){
@@ -211,12 +227,21 @@ class interviews extends Controller
         $this->validate($request,[
             "number"=>["required","numeric"]
         ]);
-        $applications=Application::where('User_id',Auth::user()->id)->where("new",1)->where("mailed",0)->orderBy("stars","desc")->take($request->number)->get();
+        $applications=Application::where('User_id',Auth::user()->id)->where("new",1)->where('rejected','0')->where('accepted','1')->where("mailed",0)->orderBy("stars","desc")->take($request->number)->get();
         return view("peoplelist",[
             "applications"=>$applications
         ]);
     }
 
+    public function acceptedpeople(Request $request){
+        $this->validate($request,[
+            "number"=>["required","numeric"]
+        ]);
+        $applications=Application::where('User_id',Auth::user()->id)->where("new",1)->where('rejected','0')->where('accepted','1')->where("mailed",'1')->where('intern','1')->take($request->number)->get();
+        return view("peoplelist",[
+            "applications"=>$applications
+        ]);
+    }
 
 
     public function mail($id=0){
@@ -249,7 +274,7 @@ class interviews extends Controller
                 $user=Auth::user();
                 $i=0;
                 $emails="";
-                $applications=Application::where('User_id',Auth::user()->id)->where("new",1)->where("mailed",0)->orderBy("stars","desc")->take($request->number)->get();
+                $applications=Application::where('User_id',Auth::user()->id)->where("new",1)->where('rejected','0')->where('accepted','1')->where("mailed",0)->orderBy("stars","desc")->take($request->number)->get();
                 foreach($applications as $application){
                     if(env("APP_ENV")!=="local"){
                         Mail::to($application->Email)->send(new InterviewMail($application->First_Name." ".$application->Last_Name,$request->link,$user->name,$user->number,$user->position));
@@ -267,5 +292,26 @@ class interviews extends Controller
 
     public function reject(){
 
+    }
+
+    public function intern($id){
+        $applicant=Application::find($id);
+        if($applicant){
+            $applicant->rejected='0';
+            $applicant->intern='1';
+            $applicant->save();
+            return "done";
+        }
+        return "nothing";
+    }
+    public function decline($id){
+        $applicant=Application::find($id);
+        if($applicant){
+            $applicant->intern='0';
+            $applicant->rejected='1';
+            $applicant->save();
+            return "done";
+        }
+        return "nothing";
     }
 }
