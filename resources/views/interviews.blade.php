@@ -70,7 +70,9 @@
     </div>
     <script>
         let list=[];
+        @if($sent)
         @foreach($applicants as $application)list.push({{$application->id}});@endforeach
+        @endif
         console.log(list);
         $.ajaxSetup({
             headers: {
