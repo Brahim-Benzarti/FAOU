@@ -34,7 +34,9 @@ class AcceptMail extends Mailable
         $this->User_Name=$User_Name;
         $this->User_Position=$User_Position;
         $this->User_Phone=$User_Phone;
+        $this->hasfiles=0;
         if($content->files){
+            $this->hasfiles=1;
             $this->files=explode('|',$content->files);
         }
     }
@@ -47,8 +49,10 @@ class AcceptMail extends Mailable
     public function build()
     {
         $mail= $this->markdown('emails.accept')->subject("FAOU Autumn 2021 Hiring Process - Accepted!");
-        foreach($this->files as $file){
-            $mail->attach(public_path('/files/email/accept/'.$file));
+        if($this->hasfiles){
+            foreach($this->files as $file){
+                $mail->attach(public_path('/files/email/accept/'.$file));
+            }
         }
         return $mail;
     }
