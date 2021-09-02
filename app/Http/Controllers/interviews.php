@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Mail;
 class interviews extends Controller
 {
     public function index(){
-        $res=Application::where('User_id',Auth::user()->id)->where("new","1")->where('rejected','0')->where('accepted','1')->where("mailed","1")->get();
+        $res=Application::where('User_id',Auth::user()->id)->where("new","1")->where('accepted','1')->where("mailed","1")->get();
         $sent=0;
         if($res->count()){
             $sent=1;
