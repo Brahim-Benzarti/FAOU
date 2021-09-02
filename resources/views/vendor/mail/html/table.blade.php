@@ -6,7 +6,7 @@
 <table>
 <tr>
 <td>
-<img src="{{asset('images/logo.png')}}" class="logo" alt="">
+<img src="{{asset('images/logo.png')}}" class="logo" alt="" width="75" height="75">
 </td>
 <td>
 <h1>{{$name}}</h1>

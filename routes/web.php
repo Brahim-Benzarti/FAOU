@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\EmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,8 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function (){
     Route::get("Interviews", [App\Http\Controllers\interviews::class, "index"])->name("InterviewsHome");
+    Route::get("Decide_Interviews", [App\Http\Controllers\interviews::class, "interviews"])->name("Interviews");
+    Route::get("Acceptance", [App\Http\Controllers\interviews::class, "acceptance"])->name("AcceptanceHome");
     Route::get("Add_Applications", [App\Http\Controllers\interviews::class, "add"])->name("AddApplications");
     Route::post("Add_Applications", [App\Http\Controllers\interviews::class, "add"])->name("AddApplications");
     Route::get("View_Application/{index?}", [App\Http\Controllers\interviews::class, "viewone"])->name("ViewApplication");
@@ -34,15 +37,22 @@ Route::middleware('auth')->group(function (){
         Route::get('/interview/{id?}', [App\Http\Controllers\interviews::class, "interview"])->name("interviewemail");
         Route::post('/interview', [App\Http\Controllers\interviews::class, "interview"]);
         Route::get('/rejection/{id?}', [App\Http\Controllers\interviews::class, "reject"])->name("rejectemail");
+        Route::get('/accept/{id?}', [EmailController::class, "acceptmail"])->name("acceptemail");
+        Route::post('/accept', [EmailController::class, "acceptmail"]);
     });
     Route::post('peoplelist', [App\Http\Controllers\interviews::class, "people"])->name("people");
+    Route::post('acceptedpeoplelist', [App\Http\Controllers\interviews::class, "acceptedpeople"]);
     Route::post('mail/{id?}', [App\Http\Controllers\interviews::class, "mail"]);
     Route::get('mail/{id?}', [App\Http\Controllers\interviews::class, "mail"]);
 
-    Route::prefix('EditEmail')->group(function(){
-        Route::get('/{for}', [EmailController::class, 'index'])->name('editmail');
-        Route::post('/{for}', [EmailController::class, 'index']);
+    Route::prefix('home')->group(function(){
+        Route::get('/Refer', [EmailController::class, 'refer'])->name('refer');
+        Route::get('/EditEmail', [EmailController::class, "index"])->name('editmail');
+        Route::post('/EditEmail', [EmailController::class, 'index'])->name('editingmail');
     });
+
+    Route::post('intern/{id}', [App\Http\Controllers\interviews::class, "intern"]);
+    Route::post('decline/{id}', [App\Http\Controllers\interviews::class, "decline"]);
 });
 
 Auth::routes();

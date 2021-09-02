@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -48,9 +48,12 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Interviews</a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="{{route('InterviewsHome')}}">Interviews</a>
-                                <a class="dropdown-item" href="{{route('viewdefault')}}">Applications</a>
                                 <a class="dropdown-item" href="{{route('AddApplications')}}">Add Applications</a>
+                                <a class="dropdown-item" href="{{route('viewdefault')}}">Applications</a>
+                                <a class="dropdown-item" href="{{route('InterviewsHome')}}">Interviews</a>
+                                <a class="dropdown-item" href="{{route('AcceptanceHome')}}">Acceptance</a>
+                                
+                                
                             </div>
                         </li>
                         @endauth

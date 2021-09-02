@@ -37,6 +37,7 @@ class CreateApplicationsTable extends Migration
             $table->char("new",1)->default(1);
             $table->char("interviewed",1)->default(0);
             $table->char('mailed',1)->default(0);
+            $table->char('intern',1)->default(0);
             $table->timestamps();
         });
     }

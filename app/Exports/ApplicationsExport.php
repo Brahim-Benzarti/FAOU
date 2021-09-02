@@ -40,7 +40,8 @@ class ApplicationsExport implements FromCollection, WithHeadings, WithMapping
             $row->incomplete,
             $row->new,
             $row->interviewed,
-            $row->mailed
+            $row->mailed,
+            $row->intern
         ];
     }
     public function headings(): array
@@ -65,7 +66,8 @@ class ApplicationsExport implements FromCollection, WithHeadings, WithMapping
             'Incomplete',
             'New',
             'Interviewed',
-            'Mailed'
+            'Mailed',
+            "Intern"
         ];
     }
 }

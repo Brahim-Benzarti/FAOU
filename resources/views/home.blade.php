@@ -62,10 +62,11 @@
                             @endif
                         </div>
                     </div>
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-around">
+                        <a href="{{route('editmail')}}" class="btn btn-primary" rel="">Edit Emails</a>
                         <form action="{{Route('newSeason')}}" method="post">
                             @csrf
-                            <button type="submit" class="btn btn-primary" >Start a new season</button>
+                            <button type="submit" class="btn btn-danger" >Start a new season</button>
                         </form>
                     </div>
                 </div>

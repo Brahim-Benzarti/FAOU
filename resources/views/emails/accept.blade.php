@@ -1,12 +1,17 @@
 @component('mail::message')
-# Introduction
+# Congratulation
 
-The body of your message.
+Dear **{{$Applicant_Name ?? "Applicant Name"}}**,
 
-@component('mail::button', ['url' => ''])
-Button Text
+{{$body}}
+
+@isset($footer)
+@component('mail::subcopy')
+{{$footer}}
 @endcomponent
+@endisset
 
-Thanks,<br>
-{{ config('app.name') }}
+Best regards.
+@component('mail::table', ['name'=>$User_Name ?? "FAOU Admin", 'position'=>$User_Position ?? "Concil Member", 'phone'=>$User_Phone ?? "212633295241"])
+@endcomponent
 @endcomponent
