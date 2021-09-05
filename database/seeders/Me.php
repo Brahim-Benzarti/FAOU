@@ -23,5 +23,12 @@ class Me extends Seeder
             'position'=>'Admin',
             'password' => Hash::make('root'),
         ]);
+        DB::table('users')->insert([
+            'name' => "Zoubair Khouaja",
+            'email' => 'second@faou.com',
+            'super'=>'1',
+            'position'=>'CEO',
+            'password' => Hash::make('testing'),
+        ]);
     }
 }
