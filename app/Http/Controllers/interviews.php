@@ -227,7 +227,7 @@ class interviews extends Controller
         $this->validate($request,[
             "number"=>["required","numeric"]
         ]);
-        $applications=Application::where('User_id',Auth::user()->id)->where("new",1)->where('rejected','0')->where('accepted','1')->where("mailed",0)->orderBy("stars","desc")->take($request->number)->get();
+        $applications=Application::where('User_id',Auth::user()->id)->where("new",'1')->where('rejected','0')->where('accepted','1')->where("mailed",'0')->orderBy("stars","desc")->take($request->number)->get();
         return view("peoplelist",[
             "applications"=>$applications
         ]);
@@ -237,7 +237,7 @@ class interviews extends Controller
         $this->validate($request,[
             "number"=>["required","numeric"]
         ]);
-        $applications=Application::where('User_id',Auth::user()->id)->where("new",1)->where('rejected','0')->where('accepted','1')->where("mailed",'1')->where('intern','1')->take($request->number)->get();
+        $applications=Application::where('User_id',Auth::user()->id)->where("new",'1')->where('rejected','0')->where('accepted','1')->where("mailed",'1')->where('intern','1')->take($request->number)->get();
         return view("peoplelist",[
             "applications"=>$applications
         ]);
