@@ -101,7 +101,7 @@ class EmailController extends Controller
                 $user=Auth::user();
                 $i=0;
                 $emails="";
-                $applications=Application::where('User_id',Auth::user()->id)->where("new",1)->where('rejected','0')->where('accepted','1')->where("mailed",0)->orderBy("stars","desc")->take($request->number)->get();
+                $applications=Application::where('User_id',Auth::user()->id)->where("new",'1')->where('rejected','0')->where('accepted','1')->where("mailed",'1')->where('intern','1')->take($request->number)->get();
                 foreach($applications as $application){
                     if(env("APP_ENV")!=="local"){
                         Mail::to($application->Email)->send(new AcceptMail($application->First_Name." ".$application->Last_Name,$user->name,$user->number,$user->position));
