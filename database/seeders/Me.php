@@ -17,10 +17,10 @@ class Me extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => "root",
-            'email' => 'root@faou.com',
+            'name' => "Brahim Benzarti",
+            'email' => 'brahim.al.benzarti@gmail.com',
             'super'=>'1',
-            'position'=>'Admin',
+            'position'=>'IT Manager',
             'password' => Hash::make('root'),
         ]);
         DB::table('users')->insert([
