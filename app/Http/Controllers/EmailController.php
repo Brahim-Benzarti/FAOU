@@ -47,30 +47,30 @@ class EmailController extends Controller
                 ]);
                 $filesExist=0;
                 $files="";
-                try{
-                    Storage::deleteDirectory(public_path('files\email\accept'));
-                }catch(exception $e){
-                    dd($e);
-                }
-                if($request->attachements){
-                    $filesExist++;
-                    foreach($request->attachements as $file){
-                        $files.=$file->getClientOriginalName().'|';
-                        $file->move(public_path("files/email/accept"),$file->getClientOriginalName());
-                    }
-                }
+                // try{
+                //     Storage::deleteDirectory(public_path('files\email\accept'));
+                // }catch(exception $e){
+                //     dd($e);
+                // }
+                // if($request->attachements){
+                //     $filesExist++;
+                //     foreach($request->attachements as $file){
+                //         $files.=$file->getClientOriginalName().'|';
+                //         $file->move(public_path("files/email/accept"),$file->getClientOriginalName());
+                //     }
+                // }
                 if(!count(Email::where('name','accept')->get())){
-                    DB::insert('insert into emails (name, main, secondary, files) values (?, ?, ?, ?)', [
+                    DB::insert('insert into emails (name, main, secondary) values (?, ?, ?)', [
                         "accept",
                         $request->primary,
-                        $request->secondary,
-                        $filesExist ? substr($files,0,-1) : null
+                        $request->secondary
+                        // $filesExist ? substr($files,0,-1) : null
                     ]);
                 }else{
                     $record=Email::where('name','accept')->first();
                     $record->main=$request->primary;
                     $record->secondary=$request->secondary;
-                    $record->files=$filesExist ? substr($files,0,-1) : null;
+                    // $record->files=$filesExist ? substr($files,0,-1) : null;
                     $record->save();
                 }
             }

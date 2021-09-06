@@ -35,7 +35,8 @@
                 <label for="files" class="ml-2 mr-4">Attachments</label>
                 <label id="files" class="btn btn-primary">
                     <span id="filestext">Upload files</span>
-                    <input type="file" name="attachements[]" id="attachements" multiple style="display: none;">
+                    <input type="file" name="attachements[]" id="attachements" multiple style="display: none;" disabled>
+                    <span class="text-danger">The file is already there no need to change it.</span>
                 </label>
             </div>
         </div>
