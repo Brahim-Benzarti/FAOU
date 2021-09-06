@@ -24,7 +24,7 @@ class EmailController extends Controller
             return view('editmail');
         }else if($request->method()=="POST"){
             $this->validate($request, [
-                "options"=>["required",Rule::in(["interview","accept"])],
+                "options"=>["required",Rule::in(["interview","accept","reject"])],
                 "primary"=>["required","string","max:1000"],
                 "secondary"=>["nullable","string","max:500"]
             ]);
@@ -73,6 +73,19 @@ class EmailController extends Controller
                     // $record->files=$filesExist ? substr($files,0,-1) : null;
                     $record->save();
                 }
+            }else if($request->options=="reject"){
+                if(!count(Email::where('name','reject')->get())){
+                    DB::insert('insert into emails (name, main, secondary) values (?, ?, ?)', [
+                        "reject",
+                        $request->primary,
+                        $request->secondary
+                    ]);
+                }else{
+                    $record=Email::where('name','reject')->first();
+                    $record->main=$request->primary;
+                    $record->secondary=$request->secondary;
+                    $record->save();
+                }
             }
         }
         return redirect()->route('home');
@@ -113,5 +126,36 @@ class EmailController extends Controller
             }
         }
         // Mail::to(env('TEST_EMAIL'))->send(new AcceptMail(null,null,null,null));
+    }
+
+    public function rejectmail(Request $request){
+        if($request->method()=="GET"){
+            return new RejectMail(NULL,NULL,NULL,NULL,NULL);
+        }else if($request->method()=="POST"){
+            $this->validate($request,[
+                "number"=>["required","numeric"],
+                "me"=>["required"]
+            ]);
+            if($request->boolean('me')){
+                $user=Auth::user();
+                Mail::to(env('TEST_EMAIL'))->send(new RejectMail("Me",$user->name,$user->number,$user->position));
+                return "sent";
+            }else{
+                $user=Auth::user();
+                $i=0;
+                $emails="";
+                $applications=Application::where('User_id',Auth::user()->id)->where("new",1)->where('rejected','0')->where('accepted','1')->where("mailed",0)->orderBy("stars","desc")->take($request->number)->get();
+                foreach($applications as $application){
+                    if(env("APP_ENV")!=="local"){
+                        Mail::to($application->Email)->send(new RejectMail($application->First_Name." ".$application->Last_Name,$user->name,$user->number,$user->position));
+                        $application->mailed="1";
+                        $application->save();
+                    }
+                    $emails.=$application->Email." ";
+                    $i++;
+                }
+                return "sent".$i." ".$emails;
+            }
+        }
     }
 }

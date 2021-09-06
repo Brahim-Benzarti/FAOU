@@ -14,11 +14,14 @@
     <form class="container" method="POST" action="{{route('editingmail')}}" enctype="multipart/form-data" id="myform">
         @csrf
         <div class="btn-group-toggle row justify-content-around" data-toggle="buttons">
-            <label class="col-4 btn btn-primary active">
+            <label class="col-3 btn btn-primary active">
                 <input type="radio" name="options" id="option1" value="interview" autocomplete="off" checked>Interview
             </label>
-            <label class="col-4 btn btn-primary">
+            <label class="col-3 btn btn-primary">
                 <input type="radio" name="options" id="option2" value="accept" autocomplete="off">Accept
+            </label>
+            <label class="col-3 btn btn-primary">
+                <input type="radio" name="options" id="option3" value="reject" autocomplete="off">Reject
             </label>
         </div>
 
@@ -59,6 +62,9 @@
             });
             $('#option2').click(()=>{
                 $('#acceptOnly').slideDown();
+            });
+            $('#option3').click(()=>{
+                $('#acceptOnly').slideUp();
             });
         })
     </script>

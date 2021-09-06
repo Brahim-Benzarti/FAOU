@@ -7,8 +7,8 @@
             @foreach ($applicants as $application)
                 <label class="col-md-4 col-lg-3 d-flex flex-column align-items-center mt-3" for="btn{{$application->id}}">
                     <img class="rounded-circle" src="{{asset('images/profile_demo.png')}}" alt="" style="width:200px;height:200px;min-height:200px;cursor: pointer;">
-                    <img id="as{{$application->id}}" class="rounded-circle" src="{{asset('images/interview_approved.png')}}" style="width:200px;height:200px;min-height:200px;cursor: pointer;position: absolute;@if(!$application->intern)display:none;@endif">
-                    <img id="ds{{$application->id}}" class="rounded-circle" src="{{asset('images/interview_denied.png')}}" style="width:200px;height:200px;min-height:200px;cursor: pointer;position: absolute;@if(!$application->rejected)display:none;@endif">
+                    <img id="as{{$application->id}}" class="rounded-circle" src="{{asset('images/interview_approved.png')}}" style="width:200px;height:200px;min-height:200px;cursor: pointer;position: absolute;@if($application->intern==="0" || $application->intern==NULL)display:none;@endif">
+                    <img id="ds{{$application->id}}" class="rounded-circle" src="{{asset('images/interview_denied.png')}}" style="width:200px;height:200px;min-height:200px;cursor: pointer;position: absolute;@if($application->intern==="1" || $application->intern==NULL)display:none;@endif">
                     <div style="font-size:20px;cursor: pointer;">{{$application->First_Name}} {{$application->Last_Name}}</div>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal{{$application->id}}" style="display:none;" id="btn{{$application->id}}"></button>
                 </label>

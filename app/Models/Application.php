@@ -27,6 +27,9 @@ class Application extends Model
         'incomplete',
         'accepted',
         'rejected',
-        'stars'
+        'stars',
+        'mailed',
+        'intern',
+        'interviewed'
     ];
 }

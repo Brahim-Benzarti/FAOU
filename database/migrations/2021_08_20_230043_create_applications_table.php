@@ -28,16 +28,16 @@ class CreateApplicationsTable extends Migration
             $table->String("Motivation_Letter",3500)->nullable();
             $table->String("User_id");
             $table->String("Users_Access")->nullable();
-            $table->char("seen",1)->default(0);
-            $table->char("flag",1)->default(0);
-            $table->char("incomplete",1)->default(0);
-            $table->char("accepted",1)->default(0);
-            $table->char("rejected",1)->default(0);
-            $table->char("stars",1)->default(0);
-            $table->char("new",1)->default(1);
-            $table->char("interviewed",1)->default(0);
-            $table->char('mailed',1)->default(0);
-            $table->char('intern',1)->default(0);
+            $table->char("seen",1)->default('0');
+            $table->char("flag",1)->default('0');
+            $table->char("incomplete",1)->default('0');
+            $table->char("accepted",1)->default('0');
+            $table->char("rejected",1)->default('0');
+            $table->char("stars",1)->default('0');
+            $table->char("new",1)->default('1');
+            $table->char("interviewed",1)->default('0');
+            $table->char('mailed',1)->default('0');
+            $table->char('intern',1)->nullable();
             $table->timestamps();
         });
     }

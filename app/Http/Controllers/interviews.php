@@ -13,6 +13,7 @@ use App\Models\Application;
 use Illuminate\Support\Facades\Http; 
 use Auth;
 use App\Mail\InterviewMail;
+use App\Mail\RejectMail;
 use Illuminate\Support\Facades\Mail;
 
 class interviews extends Controller
@@ -31,6 +32,10 @@ class interviews extends Controller
 
     public function acceptance(){
         return view('sendacceptance');
+    }
+
+    public function rejection(){
+        return view('sendrejection');
     }
 
     public function interviews(){
@@ -175,9 +180,11 @@ class interviews extends Controller
             if($request->event=="Interview"){
                 if($application->accepted=="1"){
                     $application->accepted="0";
+                    $application->rejected="1";
                     $msg="Interview";
                 }else{
                     $application->accepted="1";
+                    $application->rejected="0";
                     $msg="Cancel Interview";
                 }
             }
@@ -202,9 +209,11 @@ class interviews extends Controller
             if($request->event=="Reject"){
                 if($application->rejected=="1"){
                     $application->rejected="0";
+                    $application->accepted="1";
                     $msg="Reject";
                 }else{
                     $application->rejected="1";
+                    $application->accepted="0";
                     $msg="Remove Rejection";
                 }
             }
@@ -238,6 +247,13 @@ class interviews extends Controller
             "number"=>["required","numeric"]
         ]);
         $applications=Application::where('User_id',Auth::user()->id)->where("new",'1')->where('rejected','0')->where('accepted','1')->where("mailed",'1')->where('intern','1')->take($request->number)->get();
+        return view("peoplelist",[
+            "applications"=>$applications
+        ]);
+    }
+    
+    public function rejectedpeople(Request $request){
+        $applications=Application::where('User_id',Auth::user()->id)->where("new",'1')->where('rejected','0')->where('accepted','1')->where("mailed",'1')->where('intern','0')->get();
         return view("peoplelist",[
             "applications"=>$applications
         ]);
@@ -291,13 +307,38 @@ class interviews extends Controller
 
 
     public function reject(){
-
+        if($request->method()=="GET"){
+            return new RejectMail(NULL,NULL,NULL,NULL,NULL);
+        }else if($request->method()=="POST"){
+            $this->validate($request,[
+                "me"=>["required"]
+            ]);
+            if($request->boolean('me')){
+                $user=Auth::user();
+                Mail::to(env('TEST_EMAIL'))->send(new RejectMail("Me",$user->name,$user->number,$user->position));
+                return "sent";
+            }else{
+                $user=Auth::user();
+                $i=0;
+                $emails="";
+                $applications=Application::where('User_id',Auth::user()->id)->where("new",'1')->where('rejected','0')->where('accepted','1')->where("mailed",'1')->where('intern','0')->get();
+                foreach($applications as $application){
+                    if(env("APP_ENV")!=="local"){
+                        Mail::to($application->Email)->send(new RejectMail($application->First_Name." ".$application->Last_Name,$user->name,$user->number,$user->position));
+                        $application->mailed="1";
+                        $application->save();
+                    }
+                    $emails.=$application->Email." ";
+                    $i++;
+                }
+                return "sent".$i." ".$emails;
+            }
+        }
     }
 
     public function intern($id){
         $applicant=Application::find($id);
         if($applicant){
-            $applicant->rejected='0';
             $applicant->intern='1';
             $applicant->save();
             return "done";
@@ -308,7 +349,6 @@ class interviews extends Controller
         $applicant=Application::find($id);
         if($applicant){
             $applicant->intern='0';
-            $applicant->rejected='1';
             $applicant->save();
             return "done";
         }

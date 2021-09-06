@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function (){
     Route::get("Interviews", [App\Http\Controllers\interviews::class, "index"])->name("InterviewsHome");
     Route::get("Decide_Interviews", [App\Http\Controllers\interviews::class, "interviews"])->name("Interviews");
     Route::get("Acceptance", [App\Http\Controllers\interviews::class, "acceptance"])->name("AcceptanceHome");
+    Route::get("Rejection", [App\Http\Controllers\interviews::class, "rejection"])->name("RejectionHome");
     Route::get("Add_Applications", [App\Http\Controllers\interviews::class, "add"])->name("AddApplications");
     Route::post("Add_Applications", [App\Http\Controllers\interviews::class, "add"])->name("AddApplications");
     Route::get("View_Application/{index?}", [App\Http\Controllers\interviews::class, "viewone"])->name("ViewApplication");
@@ -37,11 +38,13 @@ Route::middleware('auth')->group(function (){
         Route::get('/interview/{id?}', [App\Http\Controllers\interviews::class, "interview"])->name("interviewemail");
         Route::post('/interview', [App\Http\Controllers\interviews::class, "interview"]);
         Route::get('/rejection/{id?}', [App\Http\Controllers\interviews::class, "reject"])->name("rejectemail");
+        Route::post('/rejection', [App\Http\Controllers\interviews::class, "reject"]);
         Route::get('/accept/{id?}', [EmailController::class, "acceptmail"])->name("acceptemail");
         Route::post('/accept', [EmailController::class, "acceptmail"]);
     });
     Route::post('peoplelist', [App\Http\Controllers\interviews::class, "people"])->name("people");
     Route::post('acceptedpeoplelist', [App\Http\Controllers\interviews::class, "acceptedpeople"]);
+    Route::post('rejectedpeoplelist', [App\Http\Controllers\interviews::class, "rejectedpeople"]);
     Route::post('mail/{id?}', [App\Http\Controllers\interviews::class, "mail"]);
     Route::get('mail/{id?}', [App\Http\Controllers\interviews::class, "mail"]);
 

@@ -52,6 +52,7 @@
                                 <a class="dropdown-item" href="{{route('viewdefault')}}">Applications</a>
                                 <a class="dropdown-item" href="{{route('InterviewsHome')}}">Interviews</a>
                                 <a class="dropdown-item" href="{{route('AcceptanceHome')}}">Acceptance</a>
+                                <a class="dropdown-item" href="{{route('RejectionHome')}}">Rejection</a>
                                 
                                 
                             </div>
