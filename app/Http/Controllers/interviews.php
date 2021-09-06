@@ -306,7 +306,7 @@ class interviews extends Controller
     }
 
 
-    public function reject(){
+    public function reject(Request $request){
         if($request->method()=="GET"){
             return new RejectMail(NULL,NULL,NULL,NULL,NULL);
         }else if($request->method()=="POST"){
