@@ -36,7 +36,7 @@ class ApplicationsImport implements ToModel, WithHeadingRow
 
         //this one for backups
         return new Application([
-            "Time"=> $row['time'] ?? $row['submission_time'],
+            "Time"=> $row['time'] ? $row['submission_time']: date('Y-m-d H:i:s'),
             "First_Name"=> $row['first_name'],
             "Last_Name"=> $row['last_name'],
             "Email"=> strlen($row['email'])<1000 ? $row['email'] : Null,
