@@ -25,7 +25,7 @@ class CreateApplicationsTable extends Migration
             $table->String("First_Time")->nullable();
             $table->String("CV",1000)->nullable();
             $table->String("Biography",5000)->nullable();
-            $table->String("Motivation_Letter",10000)->nullable();
+            $table->String("Motivation_Letter",6000)->nullable();
             $table->String("User_id");
             $table->String("Users_Access")->nullable();
             $table->char("seen",1)->default('0');
