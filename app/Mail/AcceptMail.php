@@ -48,7 +48,7 @@ class AcceptMail extends Mailable
      */
     public function build()
     {
-        $mail= $this->markdown('emails.accept')->subject("FAOU Autumn 2021 Hiring Process - Accepted!");
+        $mail= $this->markdown('emails.accept')->subject("FAOU Winter 2022 Hiring Process - Accepted!");
         if($this->hasfiles){
             foreach($this->files as $file){
                 $mail->attach(public_path('/files/email/accept/'.$file));

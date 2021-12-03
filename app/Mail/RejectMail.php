@@ -43,6 +43,6 @@ class RejectMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.reject')->subject("FAOU Autumn 2021 Hiring Process - Rejected!");
+        return $this->markdown('emails.reject')->subject("FAOU Winter 2022 Hiring Process - Rejected!");
     }
 }
